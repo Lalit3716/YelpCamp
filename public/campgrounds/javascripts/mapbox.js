@@ -10,6 +10,9 @@ async function makeMap() {
     zoom: 8, // starting zoom
   });
 
+  // Add zoom and rotation controls to the map.
+  map.addControl(new mapboxgl.NavigationControl());
+
   // const popup = new mapboxgl.Popup({
   //   offset: -10,
   // }).setHTML(
