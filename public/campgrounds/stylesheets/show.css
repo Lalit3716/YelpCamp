@@ -233,3 +233,10 @@
     object-fit: cover;
   }
 }
+
+@media (max-width: 400px) {
+  .card-images {
+    max-height: 230px;
+    object-fit: cover;
+  }
+}
