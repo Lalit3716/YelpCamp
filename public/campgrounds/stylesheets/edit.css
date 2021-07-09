@@ -1,0 +1,7 @@
+.deleteImages input {
+  display: none;
+}
+
+.deleteImages input:checked + label {
+  border: 5px solid red;
+}

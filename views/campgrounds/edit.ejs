@@ -1,0 +1,69 @@
+<% layout('layouts/boilerplate') -%>
+
+<% block('head').append('<link rel="stylesheet" href="/campgrounds/stylesheets/edit.css">') %>
+<div class="row my-3">
+    <h3 class="display-4 text-center">Edit <%= campground.title %></h3>
+    <div class="col-6 offset-3">
+        <form class="needs-validation" action="/campgrounds/<%= campground._id %>/edit?_method=PUT" method="POST"
+            novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="campground[title]"
+                    value="<%= campground.title %>" required>
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
+                <div class="invalid-feedback" id="title-invalid">
+                    Title Must Be Given!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name='campground[location]'
+                    value="<%= campground.location %>" required>
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
+            </div>
+            <div>
+                <label for="description">Description</label>
+            </div>
+            <div class="mb-3">
+                <textarea name="campground[description]" id="description" class="form-control" rows="5"
+                    required><%= campground.description %></textarea>
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend">$</span>
+                    <input pattern='\d+|\d+.\d{2}' type="text" class="form-control" id="price" name='campground[price]'
+                        value="<%= campground.price %>" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Invalid Price!
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="formFileMultiple" class="form-label">Add Images</label>
+                <input class="form-control" type="file" id="formFileMultiple" name="images" multiple>
+            </div>
+            <div class="mb-3 deleteImages">
+                <h6>Delete ?</h6>
+                <% campground.images.forEach((img, i) => { %>
+                <input type="checkbox" name="deleteImages[]" id="image<%= i %>" value="<%= img.filename %>">
+                <label for="image<%= i %>"><img src="<%= img.deletethumb %>" alt=""></label>
+                <% }) %>
+            </div>
+            <button type="submit" class="btn btn-success">Update Campground</button>
+            <a class="btn btn-danger" href="/campgrounds/<%= campground._id %>">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<script src="/campgrounds/javascripts/edit.js"></script>
