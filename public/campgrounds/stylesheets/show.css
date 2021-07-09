@@ -215,10 +215,21 @@
 .card-images {
   max-height: 423px;
   object-fit: cover;
-  object-position: center;
 }
 
 .avg-rated-star {
   color: rgb(236, 15, 15);
   font-size: larger;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 1398px) {
+  .card-images {
+    max-height: 320px;
+    object-fit: cover;
+  }
 }
