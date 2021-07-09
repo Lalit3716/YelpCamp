@@ -33,11 +33,20 @@
             <div class="card-body">
                 <h5 class="card-title"><%= campground.title %></h5>
                 <p class="card-text"><%= campground.description %></p>
+                <p class="card-text average-rating">
+                    <% for (let i=1; i<=Math.round(campground.avg_rating); i++) {%>
+                    <i class="fas fa-star avg-rated-star"></i>
+                    <% } %>
+                    <% for(let j=1; j<=(5-Math.round(campground.avg_rating)); j++){ %>
+                    <i class="far fa-star avg-rated-star"></i>
+                    <% } %>
+                    <p class="text-muted"><%= campground.reviews.length %> Reviews</p>
+                </p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Owner: <%= campground.author.username %></li>
-                <li class="list-group-item">Price: $<%= campground.price %>/Night</li>
-                <li class="list-group-item text-muted">Location: <%= campground.location %></li>
+                <li class="list-group-item"><i class="fas fa-user me-2"></i> <%= campground.author.username %></li>
+                <li class="list-group-item"><i class="fas fa-dollar-sign me-2"></i> <%= campground.price %>/Night</li>
+                <li class="list-group-item text-muted"><i class="fas fa-globe me-2"></i> <%= campground.location %></li>
             </ul>
             <% if (currentUser && (`${campground.author._id}` == `${currentUser._id}`)){ %>
             <div class="card-body">
@@ -57,13 +66,12 @@
 </div>
 <div class="row my-5">
     <div class="col-md-6 order-2 order-md-1">
-        <h2 class="display-5">Reviews</h2>
-        <h5>Average Rating: <%= campground.avg_rating %></h5>
+        <h2 class="display-5 mb-3">Reviews</h2>
         <% if(campground.reviews && campground.reviews.length < 1){ %>
         <p class="w-100 h-100 d-flex justify-content-center align-items-center display-6">No Reviews Yet...</p>
         <% } %>
         <% for (let review of campground.reviews) { %>
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">Rating: <%= review.rating %></h5>
                 <span class="card-subtitle"><i> -<%= review.author.username %></i></span>

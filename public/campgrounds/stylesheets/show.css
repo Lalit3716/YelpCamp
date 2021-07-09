@@ -217,3 +217,8 @@
   object-fit: cover;
   object-position: center;
 }
+
+.avg-rated-star {
+  color: rgb(236, 15, 15);
+  font-size: larger;
+}
