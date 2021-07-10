@@ -23,8 +23,16 @@ module.exports.checkCampgroundTitle = async (req, res) => {
 };
 
 module.exports.renderIndexPage = async (req, res) => {
-  const campgrounds = await Campground.find({});
-  res.render("campgrounds/index", { campgrounds });
+  const search = req.query.search || "";
+  const campgrounds = await Campground.find({
+    $or: [
+      {
+        title: new RegExp(`(\w*)${search}(\w*)`, "i"),
+      },
+      { location: new RegExp(`(\w*)${search}(\w*)`, "i") },
+    ],
+  });
+  res.render("campgrounds/index", { campgrounds, searchTerm: search });
 };
 
 module.exports.renderNewForm = (req, res) => {
