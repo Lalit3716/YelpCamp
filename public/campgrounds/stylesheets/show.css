@@ -234,7 +234,7 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 420px) {
   .card-images {
     max-height: 230px;
     object-fit: cover;

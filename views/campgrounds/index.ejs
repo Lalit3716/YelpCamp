@@ -31,6 +31,6 @@
 </div>
 <% }%>
 <script>
-    const Mapbox_Token = `<%= process.env.MAPBOX_TOKEN %>`
+    const Mapbox_Token = `<%- process.env.MAPBOX_TOKEN %>`
 </script>
 <script src="/campgrounds/javascripts/clusterMap.js"></script>
