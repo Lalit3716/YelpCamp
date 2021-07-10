@@ -35,9 +35,6 @@ module.exports.renderIndexPage = async (req, res) => {
 
   const search = req.query.search || "";
   let sortby = req.query.sort || "";
-  if (sortby == "avg_rating") {
-    sortby = "-avg_rating";
-  }
 
   if (search) {
     totalPages = 0;

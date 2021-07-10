@@ -16,7 +16,7 @@
     <div class="mb-3 me-2">
         <select id="" class="form-select form-control" name="sort">
             <option value="" <%- sortby? "selected": "" %>>Sort By</option>
-            <option value="avg_rating" <%- (sortby=="avg_rating" || sortby=="-avg_rating")? "selected": "" %>>Rating
+            <option value="-avg_rating" <%- (sortby=="-avg_rating")? "selected": "" %>>Rating
             </option>
             <option value="price" <%- sortby=="price"? "selected": "" %>>Price</option>
         </select>
@@ -69,7 +69,7 @@
 <% if (totalPages){ %>
 <div class="container">
     <% for(let i=1; i<=totalPages; i++){ %>
-    <a class="me-3" href="/campgrounds?pageNumber=<%= i %>">#<%= i %></a>
+    <a class="me-3" href="/campgrounds?pageNumber=<%= i %><%= sortby? `&sort=${sortby}`: ""%>">#<%= i %></a>
     <% } %>
 </div>
 <% } %>
