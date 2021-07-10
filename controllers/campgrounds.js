@@ -24,6 +24,10 @@ module.exports.checkCampgroundTitle = async (req, res) => {
 
 module.exports.renderIndexPage = async (req, res) => {
   const search = req.query.search || "";
+  let sortby = req.query.sort || "";
+  if (sortby == "avg_rating") {
+    sortby = "-avg_rating";
+  }
   const campgrounds = await Campground.find({
     $or: [
       {
@@ -31,8 +35,8 @@ module.exports.renderIndexPage = async (req, res) => {
       },
       { location: new RegExp(`(\w*)${search}(\w*)`, "i") },
     ],
-  });
-  res.render("campgrounds/index", { campgrounds, searchTerm: search });
+  }).sort(sortby);
+  res.render("campgrounds/index", { campgrounds, searchTerm: search, sortby });
 };
 
 module.exports.renderNewForm = (req, res) => {

@@ -5,7 +5,7 @@ async function makeClusterMap() {
   mapboxgl.accessToken = Mapbox_Token;
   const map = new mapboxgl.Map({
     container: "map",
-    style: "mapbox://styles/mapbox/dark-v10",
+    style: "mapbox://styles/mapbox/light-v10",
     center: [-103.59179687498357, 40.66995747013945],
     zoom: 3,
   });
