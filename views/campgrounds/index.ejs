@@ -10,7 +10,8 @@
 
 <form action="/campgrounds" class="container-fluid shadow mb-5 search-form">
     <div class="col-6 mb-3 me-2">
-        <input type="search" placeholder="Search Campground/Location" class="form-control" name="search">
+        <input type="search" placeholder="Search Campground/Location" class="form-control" name="search"
+            value="<%= searchTerm %>" autofocus>
     </div>
     <div class="mb-3 me-2">
         <select id="" class="form-select form-control" name="sort">
