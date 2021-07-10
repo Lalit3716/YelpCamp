@@ -7,7 +7,7 @@
 
 
 <div class="container-fluid mb-5" id="map"></div>
-<form action="/campgrounds" class="search-form container mb-2 offset-md-2">
+<form action="/campgrounds" class="search-form container mb-5 offset-md-2">
     <div class="row">
         <div class="col-md-6 mb-3">
             <input type="search" placeholder="Search For Campground Title Or Location" class="form-control"
@@ -20,7 +20,7 @@
                 <option value="price">Price</option>
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <button class="btn btn-success">Search</button>
         </div>
     </div>
@@ -35,11 +35,8 @@
 <% } else{ %>
 <h1 class="text-center">All CampGrounds</h1>
 <% } %>
-<div class="container my-5 text-center">
-    <a href="/campgrounds/new" class="btn btn-success">Add Campground</a>
-</div>
 
-<div class="container d-flex flex-wrap campgrounds">
+<div class="container d-flex flex-wrap campgrounds mt-5">
     <% for (let campground of campgrounds){%>
     <div class="card mb-3 shadow">
         <img src="<%= campground.images.length>0?campground.images[0].thumb: "https://st3.depositphotos.com/25155840/37294/v/600/depositphotos_372944400-stock-illustration-text-image-available-circle-icon.jpg" %>"
