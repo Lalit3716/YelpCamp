@@ -8,5 +8,23 @@
 }
 
 .campgrounds {
-  justify-content: space-between;
+  justify-content: space-around;
+}
+
+.card {
+  width: 25rem;
+}
+
+.card-img-top {
+  max-height: 195px;
+  object-fit: cover;
+}
+
+.average-rating {
+  color: rgb(236, 15, 15);
+  font-size: 20px;
+}
+
+.showprice {
+  float: right;
 }

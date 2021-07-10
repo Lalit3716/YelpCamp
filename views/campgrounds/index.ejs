@@ -6,22 +6,23 @@
 <% block('head').append("   <link rel='stylesheet' href='/campgrounds/stylesheets/index.css'>") %>
 
 
-<div class="container mb-5" id="map"></div>
-<form class="row ms-5 mb-4 mb-5" action="/campgrounds">
-    <div class="col-md-6">
-        <input type="search" name="search" id="search-bar" class="form-control"
-            placeholder="Search By Title Or Location">
-    </div>
-    <div class="col-md-3">
-        <select class="form-select" name="sort-by">
-            <option selected value="">Sort By</option>
-            <option value="rating">Rating</option>
-            <option value="price">Price</option>
-        </select>
-    </div>
-    <div class="col-3">
-        <button class="btn btn-success">Search</button>
-    </div>
+<div class="container-fluid mb-5" id="map"></div>
+<form action="/campgrounds" class="search-form container mb-2 offset-md-2">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <input type="search" placeholder="Search For Campground Title Or Location" class="form-control"
+                name="search">
+        </div>
+        <div class="col-md-2 mb-3">
+            <select id="" class="form-select form-control" name="sort">
+                <option value="" default>Sort By</option>
+                <option value="rating">Rating</option>
+                <option value="price">Price</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success">Search</button>
+        </div>
     </div>
 </form>
 
@@ -40,21 +41,27 @@
 
 <div class="container d-flex flex-wrap campgrounds">
     <% for (let campground of campgrounds){%>
-    <div class="card mb-3" style="width: 18rem;">
+    <div class="card mb-3 shadow">
         <img src="<%= campground.images.length>0?campground.images[0].thumb: "https://st3.depositphotos.com/25155840/37294/v/600/depositphotos_372944400-stock-illustration-text-image-available-circle-icon.jpg" %>"
             class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title"><%= campground.title %></h5>
-            <p class="card-text"><%= campground.description %></p>
+            <h5 class="card-title d-inline-block"><%= campground.title %></h5>
+            <h5 class="card-title showprice d-inline"><i
+                    class="fas fa-dollar-sign me-2"></i><%= campground.price %>/night</h5>
+            <p class="card-text average-rating">
+                <% for (let i=1; i<=Math.round(campground.avg_rating); i++) {%>
+                <i class="fas fa-star avg-rated-star"></i>
+                <% } %>
+                <% for(let j=1; j<=(5-Math.round(campground.avg_rating)); j++){ %>
+                <i class="far fa-star avg-rated-star"></i>
+                <% } %>
+                <p class="text-muted"><%= campground.reviews.length %> Reviews</p>
+            </p>
             <p class="card-text">
-                <small class="text-muted"><%= campground.location%></small>
+                <small class="text-muted"><i
+                        class="fas fa-globe me-2 text-primary"></i><%= campground.location%></small>
             </p>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-        </ul>
         <div class="card-body">
             <a class="btn btn-primary" href="/campgrounds/<%=campground._id%>">View <%=campground.title%></a>
         </div>
