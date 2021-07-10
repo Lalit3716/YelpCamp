@@ -23,20 +23,45 @@ module.exports.checkCampgroundTitle = async (req, res) => {
 };
 
 module.exports.renderIndexPage = async (req, res) => {
+  let campgrounds;
+  const totalDocs = await Campground.countDocuments({});
+  const perPage = 9;
+  const pageNumber = req.query.pageNumber || 1;
+  let totalPages = totalDocs / perPage;
+
+  if (totalPages % 1 !== 0) {
+    totalPages = Math.floor(totalPages) + 1;
+  }
+
   const search = req.query.search || "";
   let sortby = req.query.sort || "";
   if (sortby == "avg_rating") {
     sortby = "-avg_rating";
   }
-  const campgrounds = await Campground.find({
-    $or: [
-      {
-        title: new RegExp(`(\w*)${search}(\w*)`, "i"),
-      },
-      { location: new RegExp(`(\w*)${search}(\w*)`, "i") },
-    ],
-  }).sort(sortby);
-  res.render("campgrounds/index", { campgrounds, searchTerm: search, sortby });
+
+  if (search) {
+    totalPages = 0;
+    campgrounds = await Campground.find({
+      $or: [
+        {
+          title: new RegExp(`(\w*)${search}(\w*)`, "i"),
+        },
+        { location: new RegExp(`(\w*)${search}(\w*)`, "i") },
+      ],
+    }).sort(sortby);
+  } else {
+    campgrounds = await Campground.find({})
+      .sort(sortby)
+      .skip(perPage * (pageNumber - 1))
+      .limit(9);
+  }
+
+  res.render("campgrounds/index", {
+    campgrounds,
+    searchTerm: search,
+    sortby,
+    totalPages,
+  });
 };
 
 module.exports.renderNewForm = (req, res) => {

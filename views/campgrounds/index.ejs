@@ -66,6 +66,13 @@
     </div>
     <% }%>
 </div>
+<% if (totalPages){ %>
+<div class="container">
+    <% for(let i=1; i<=totalPages; i++){ %>
+    <a class="me-3" href="/campgrounds?pageNumber=<%= i %>">#<%= i %></a>
+    <% } %>
+</div>
+<% } %>
 <script>
     const Mapbox_Token = `<%- process.env.MAPBOX_TOKEN %>`
 </script>
