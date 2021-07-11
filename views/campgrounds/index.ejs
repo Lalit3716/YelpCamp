@@ -8,7 +8,7 @@
 
 <div class="container-fluid" id="map"></div>
 
-<form action="/campgrounds" class="container-fluid shadow mb-5 search-form">
+<form action="/campgrounds" class="container-fluid shadow mb-3 search-form">
     <div class="col-6 mb-3 me-2">
         <input type="search" placeholder="Search Campground/Location" class="form-control" name="search"
             value="<%= searchTerm %>" autofocus>
@@ -18,7 +18,8 @@
             <option value="" <%- sortby? "selected": "" %>>Sort By</option>
             <option value="-avg_rating" <%- (sortby=="-avg_rating")? "selected": "" %>>Rating
             </option>
-            <option value="price" <%- sortby=="price"? "selected": "" %>>Price</option>
+            <option value="price" <%- sortby=="price"? "selected": "" %>>Lowest Price</option>
+            <option value="-price" <%- sortby=="-price"? "selected": "" %>>Highest Price</option>
         </select>
     </div>
     <div class="mb-3 me-2">
@@ -30,8 +31,10 @@
 <% if (searchTerm){ %>
 <% if (campgrounds.length>0){ %>
 <h1 class="text-center">Search Results For <%= searchTerm %></h1>
+<p class="text-center"><a href="/campgrounds">Back To All Campgrounds</a></p>
 <% } else{ %>
 <h1 class="text-center">No Results Found For <%= searchTerm %></h1>
+<p class="text-center"><a href="/campgrounds">Back To All Campgrounds</a></p>
 <% } %>
 <% } else{ %>
 <h1 class="text-center">All CampGrounds</h1>
