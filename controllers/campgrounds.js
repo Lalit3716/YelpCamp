@@ -9,12 +9,12 @@ module.exports.geoJsonCampgrounds = async (req, res) => {
 };
 
 module.exports.geoJsonCampground = async (req, res) => {
-  res.json(await Campground.findById(req.params.id));
+  res.json(await Campground.findById(req.params.id).lean());
 };
 
 module.exports.checkCampgroundTitle = async (req, res) => {
   const { title } = req.params;
-  const campground = await Campground.findOne({ title });
+  const campground = await Campground.findOne({ title }).lean();
   if (campground) {
     res.json({ found: true });
   } else {
@@ -46,6 +46,7 @@ module.exports.renderIndexPage = async (req, res) => {
         { location: new RegExp(`(\w*)${search}(\w*)`, "i") },
       ],
     }).sort(sortby);
+    var searchResults = campgrounds.length;
   } else {
     campgrounds = await Campground.find({})
       .sort(sortby)
@@ -56,6 +57,7 @@ module.exports.renderIndexPage = async (req, res) => {
   res.render("campgrounds/index", {
     campgrounds,
     searchTerm: search,
+    searchResults,
     sortby,
     totalPages,
   });

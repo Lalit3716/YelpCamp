@@ -30,7 +30,7 @@
 
 <% if (searchTerm){ %>
 <% if (campgrounds.length>0){ %>
-<h1 class="text-center">Search Results For <%= searchTerm %></h1>
+<h1 class="text-center"><%= searchResults %> Results Found For <%= searchTerm %></h1>
 <p class="text-center"><a href="/campgrounds">Back To All Campgrounds</a></p>
 <% } else{ %>
 <h1 class="text-center">No Results Found For <%= searchTerm %></h1>
