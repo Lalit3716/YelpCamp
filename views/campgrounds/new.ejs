@@ -1,58 +1,60 @@
 <% layout('layouts/boilerplate') -%>
-<div class="row my-3">
-    <h3 class="display-4 text-center">New Campground</h3>
-    <div class="col-6 offset-3">
-        <form action="/campgrounds/new" class="needs-validation d-inline" method="POST" novalidate
-            enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="campground[title]" required autofocus>
-                <div class="valid-feedback">
-                    Looks Good!
-                </div>
-                <div class="invalid-feedback" id="title-invalid">
-                    Title Must Be Given!
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" class="form-control" id="location" name='campground[location]' required>
-                <div class="valid-feedback">
-                    Looks Good!
-                </div>
-            </div>
-            <div>
-                <label for="description">Description</label>
-            </div>
-            <div class="mb-3">
-                <textarea name="campground[description]" id="description" class="form-control" required></textarea>
-                <div class="valid-feedback">
-                    Looks Good!
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="price" class="form-label">Price</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="inputGroupPrepend">$</span>
-                    <input pattern='\d+|\d+.\d{2}' type="text" class="form-control" id="price" name='campground[price]'
-                        placeholder="$0.00" required>
+
+<div class="container mt-5">
+    <div class="row">
+        <h3 class="display-4 text-center">New Campground</h3>
+        <div class="col-sm-7 col-md-6 col-lg-5 mx-auto">
+            <form action="/campgrounds/new" class="needs-validation d-inline" method="POST" novalidate
+                enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="campground[title]" required autofocus>
                     <div class="valid-feedback">
                         Looks Good!
                     </div>
-                    <div class="invalid-feedback">
-                        Invalid Price
+                    <div class="invalid-feedback" id="title-invalid">
+                        Title Must Be Given!
                     </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Add Images</label>
-                <input class="form-control" type="file" id="formFileMultiple" name="images" multiple required>
-            </div>
-            <button type="submit" class="btn btn-success">Add Campground</button>
-        </form>
-        <a href="/campgrounds" class="btn btn-danger">Cancel</a>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name='campground[location]' required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                </div>
+                <div class="mb-3">
+                    <textarea name="campground[description]" id="description" class="form-control" required></textarea>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="inputGroupPrepend">$</span>
+                        <input pattern='\d+|\d+.\d{2}' type="text" class="form-control" id="price"
+                            name='campground[price]' placeholder="$0.00" required>
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Invalid Price
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Add Images</label>
+                    <input class="form-control" type="file" id="formFileMultiple" name="images" multiple required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Campground</button>
+            </form>
+            <a href="/campgrounds" class="btn btn-danger">Cancel</a>
+        </div>
     </div>
 </div>
-
 <script src="/campgrounds/javascripts/new.js"></script>
 <script src="/campgrounds/javascripts/validateForm.js"></script>

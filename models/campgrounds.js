@@ -12,7 +12,7 @@ imageSchema.virtual("thumb").get(function () {
 });
 
 imageSchema.virtual("deletethumb").get(function () {
-  return this.path.replace("/upload", "/upload/h_150,w_200,r_20");
+  return this.path.replace("/upload", "/upload/h_130,w_160,r_20");
 });
 
 const opts = { toJSON: { virtuals: true } };

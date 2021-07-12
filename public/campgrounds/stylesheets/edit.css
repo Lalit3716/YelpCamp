@@ -2,6 +2,16 @@
   display: none;
 }
 
+.deleteImages label {
+  transition: all 100ms ease-in;
+}
+
 .deleteImages input:checked + label {
-  border: 5px solid red;
+  transform: scale(0.8);
+}
+
+@media (max-width: 400px) {
+  .deleteImages label img {
+    width: 100px;
+  }
 }
