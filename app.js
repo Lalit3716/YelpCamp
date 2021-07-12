@@ -71,6 +71,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Route Handlers
+app.get("/", (req, res) => {
+  res.render("home");
+})
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id", reviewRoutes);
 app.use("/", userRoutes);
