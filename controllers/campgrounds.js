@@ -24,20 +24,16 @@ module.exports.checkCampgroundTitle = async (req, res) => {
 
 module.exports.renderIndexPage = async (req, res) => {
     let campgrounds;
-    const totalDocs = await Campground.countDocuments({});
-    const perPage = 9;
-    const pageNumber = req.query.pageNumber || 1;
-    let totalPages = totalDocs / perPage;
-
-    if (totalPages % 1 !== 0) {
-        totalPages = Math.floor(totalPages) + 1;
-    }
-
+    let totalDocs;
     const search = req.query.search || "";
     let sortby = req.query.sort || "";
+    const perPage = 9;
+    const pageNumber = req.query.pageNumber || 1;
 
+    if (!search) {
+        totalDocs = await Campground.countDocuments({});
+    }
     if (search) {
-        totalPages = 0;
         campgrounds = await Campground.find({
             $or: [
                 {
@@ -45,8 +41,18 @@ module.exports.renderIndexPage = async (req, res) => {
                 },
                 { location: new RegExp(`(\w*)${search}(\w*)`, "i") },
             ],
-        }).sort(sortby);
-        var searchResults = campgrounds.length;
+        })
+            .sort(sortby)
+            .skip(perPage * (pageNumber - 1))
+            .limit(9);
+        totalDocs = await Campground.countDocuments({
+            $or: [
+                {
+                    title: new RegExp(`(\w*)${search}(\w*)`, "i"),
+                },
+                { location: new RegExp(`(\w*)${search}(\w*)`, "i") },
+            ],
+        });
     } else {
         campgrounds = await Campground.find({})
             .sort(sortby)
@@ -54,10 +60,16 @@ module.exports.renderIndexPage = async (req, res) => {
             .limit(9);
     }
 
+    let totalPages = totalDocs / perPage;
+
+    if (totalPages % 1 !== 0) {
+        totalPages = Math.floor(totalPages) + 1;
+    }
+
     res.render("campgrounds/index", {
         campgrounds,
         searchTerm: search,
-        searchResults,
+        totalDocs,
         sortby,
         totalPages,
         currentPage: pageNumber,

@@ -30,7 +30,7 @@
 
 <% if (searchTerm){ %>
 <% if (campgrounds.length>0){ %>
-<h1 class="text-center"><%= searchResults %> Results Found For <%= searchTerm %></h1>
+<h1 class="text-center"><%= totalDocs %> Results Found For <%= searchTerm %></h1>
 <p class="text-center"><a href="/campgrounds">Back To All Campgrounds</a></p>
 <% } else{ %>
 <h1 class="text-center">No Results Found For <%= searchTerm %></h1>
@@ -77,14 +77,16 @@
         <% if (currentPage == 1) { %>
         <li class="page-item disabled"><a class="page-link">First</a></li>
         <% } else { %>
-        <li><a class="page-link" href="/campgrounds?<%= sortby? `&sort=${sortby}`: ''%>">First</a></li>
+        <li><a class="page-link"
+                href="/campgrounds?<%= sortby? `&sort=${sortby}`: ''%><%= searchTerm? `&search=${searchTerm}`: '' %>">First</a>
+        </li>
         <% } %>
 
         <% if (currentPage == 1) { %>
         <li class="page-item disabled"><a class="page-link">«</a></li>
         <% } else { %>
         <li><a class="page-link"
-                href="/campgrounds?pageNumber=<%= Number(currentPage) - 1 %><%= sortby? `&sort=${sortby}`: ''%>">«</a>
+                href="/campgrounds?pageNumber=<%= Number(currentPage) - 1 %><%= sortby? `&sort=${sortby}`: ''%><%= searchTerm? `&search=${searchTerm}`: '' %>">«</a>
         </li>
         <% } %>
 
@@ -96,7 +98,8 @@
         <% if (i == currentPage) { %>
         <li class="active"><a class="page-link"><%= i %></a></li>
         <% } else { %>
-        <li><a class="page-link" href="/campgrounds?pageNumber=<%= i %><%= sortby? `&sort=${sortby}`: ''%>"><%= i %></a>
+        <li><a class="page-link"
+                href="/campgrounds?pageNumber=<%= i %><%= sortby? `&sort=${sortby}`: ''%><%= searchTerm? `&search=${searchTerm}`: '' %>"><%= i %></a>
         </li>
         <% } %>
         <% if (i == Number(currentPage) + 4 && i < totalPages) { %>
@@ -108,7 +111,7 @@
         <li class="page-item disabled"><a class="page-link">»</a></li>
         <% } else { %>
         <li><a class="page-link"
-                href="/campgrounds?pageNumber=<%= Number(currentPage) + 1 %><%= sortby? `&sort=${sortby}`: ''%>">»</a>
+                href="/campgrounds?pageNumber=<%= Number(currentPage) + 1 %><%= sortby? `&sort=${sortby}`: ''%><%= searchTerm? `&search=${searchTerm}`: '' %>">»</a>
         </li>
         <% } %>
 
@@ -116,7 +119,8 @@
         <li class="page-item disabled"><a class="page-link">Last</a></li>
         <% } else { %>
         <li><a class="page-link"
-                href="/campgrounds?pageNumber=<%= totalPages %><%= sortby? `&sort=${sortby}`: ''%>">Last</a></li>
+                href="/campgrounds?pageNumber=<%= totalPages %><%= sortby? `&sort=${sortby}`: ''%><%= searchTerm? `&search=${searchTerm}`: '' %>">Last</a>
+        </li>
         <% } %>
     </ul>
     <% } %>

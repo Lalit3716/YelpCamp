@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
+    require("dotenv").config();
 }
 
 const express = require("express");
@@ -17,16 +17,16 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
 });
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "Connection Error:"));
 db.once("open", () => {
-  console.log("DATABASE CONNECTED!!");
+    console.log("DATABASE CONNECTED!!");
 });
 
 app = express();
@@ -37,14 +37,14 @@ app.engine("ejs", ejsMate);
 
 // Setting Up Session
 const sessionConfig = {
-  secret: "thisisasecret",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
-  },
+    secret: "thisisasecret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    },
 };
 app.use(session(sessionConfig));
 
@@ -58,10 +58,10 @@ passport.deserializeUser(User.deserializeUser());
 // Setting Up flash
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  next();
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
 });
 
 // Other Configs For Our App
@@ -72,29 +72,35 @@ app.use(express.json());
 
 // Route Handlers
 app.get("/", (req, res) => {
-  res.render("home");
-})
+    res.render("home");
+});
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id", reviewRoutes);
 app.use("/", userRoutes);
 
 // Error handlers
 app.all("*", (req, res, next) => {
-  next(new expressError("Page Not Found", 404));
+    next(new expressError("Page Not Found", 404));
 });
 
 app.use((err, req, res, next) => {
-  if (!err.statusCode) {
-    err.statusCode = 500;
-  }
-  if (err.message === "Unexpected field") {
-    req.flash("error", "Sorry Cannot Upload More Than 3 Images");
-    res.redirect(req.originalUrl);
-  }
-  res.status(err.statusCode).render("error", { err });
+    if (!err.statusCode) {
+        err.statusCode = 500;
+    }
+
+    if (err.message === "Unexpected field") {
+        req.flash("error", "Sorry Cannot Upload More Than 3 Images");
+        res.redirect("back");
+    }
+
+    if (err.message.includes("Invalid regular expression")) {
+        req.flash("error", "Invalid Search");
+        res.redirect("back");
+    }
+    res.status(err.statusCode).render("error", { err });
 });
 
 // Starting Up Server
 app.listen(3000, (req, res) => {
-  console.log("LISTENING ON PORT 3000!!!");
+    console.log("LISTENING ON PORT 3000!!!");
 });
