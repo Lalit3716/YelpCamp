@@ -99,8 +99,8 @@
         <li class="page-item disabled"><a class="page-link">...</a></li>
         <% } %>
         <% for (; i <= (Number(currentPage) + 4) && i <= totalPages; i++) { %>
-        <% if (i == currentPage) { %>
-        <li class="active"><a class="page-link"><%= i %></a></li>
+        <% if (i == Number(currentPage)) { %>
+        <li class="page-item active"><a class="page-link"><%= i %></a></li>
         <% } else { %>
         <li><a class="page-link"
                 href="/campgrounds?pageNumber=<%= i %><%= sortby? `&sort=${sortby}`: ''%><%= searchTerm? `&search=${searchTerm}`: '' %>"><%= i %></a>

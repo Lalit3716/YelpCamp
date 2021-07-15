@@ -27,3 +27,18 @@ module.exports.isAuthor = async (req, res, next) => {
     }
     next();
 };
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+    const { reviewID } = req.params;
+    const review = await Review.findById(reviewID);
+    const reviewAuthorId = review.author;
+    if (!review) {
+        req.flash("error", "Review Not Found");
+        return res.redirect(`/campgrounds/${req.params.id}`);
+    }
+    if (!(`${req.user._id}` == `${reviewAuthorId}`)) {
+        req.flash("error", "You Are Not Allowed To do that!");
+        return res.redirect(`/campgrounds/${id}`);
+    }
+    next();
+};

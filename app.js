@@ -91,7 +91,7 @@ app.use((err, req, res, next) => {
     }
 
     if (err.message.includes("Cast to ObjectId failed")) {
-        req.flash("error", "Invalid Campground Search ID!");
+        req.flash("error", "Invalid Search ID!");
         res.redirect("/campgrounds/");
     }
 
