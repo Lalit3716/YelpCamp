@@ -38,7 +38,11 @@
 <% } %>
 <% } else{ %>
 <h1 class="text-center">All CampGrounds</h1>
+<% if (totalPages){ %>
 <h4 class="text-center">Page <%= currentPage %> of <%= totalPages %></h4>
+<% }else{ %>
+<h4 class="text-center">No Campgrounds Has Been Created Yet!</h4>
+<% } %>
 <% } %>
 
 <div class="container d-flex flex-wrap campgrounds mt-5">

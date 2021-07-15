@@ -17,33 +17,37 @@ router.get("/getOne/:id", campgrounds.geoJsonCampground);
 router.get("/find/:title", campgrounds.checkCampgroundTitle);
 
 router
-  .route("/new")
-  .get(isLoggedIn, campgrounds.renderNewForm)
-  .post(
-    isLoggedIn,
-    upload.array("images", 3),
-    validateCampground,
-    campgrounds.makeNewCampground
-  );
+    .route("/new")
+    .get(isLoggedIn, campgrounds.renderNewForm)
+    .post(
+        isLoggedIn,
+        upload.array("images", 3),
+        validateCampground,
+        campgrounds.makeNewCampground
+    );
 
 router.get("/:id", catchAsync(campgrounds.renderShowPage));
 
 router
-  .route("/:id/edit")
-  .get(isLoggedIn, isAuthor, catchAsync(campgrounds.renderEditForm))
-  .put(
-    isLoggedIn,
-    upload.array("images", 3),
-    isAuthor,
-    validateCampground,
-    catchAsync(campgrounds.editCampground)
-  );
+    .route("/:id/edit")
+    .get(
+        isLoggedIn,
+        catchAsync(isAuthor),
+        catchAsync(campgrounds.renderEditForm)
+    )
+    .put(
+        isLoggedIn,
+        upload.array("images", 3),
+        catchAsync(isAuthor),
+        validateCampground,
+        catchAsync(campgrounds.editCampground)
+    );
 
 router.delete(
-  "/:id/delete",
-  isLoggedIn,
-  isAuthor,
-  catchAsync(campgrounds.deleteCampground)
+    "/:id/delete",
+    isLoggedIn,
+    catchAsync(isAuthor),
+    catchAsync(campgrounds.deleteCampground)
 );
 
 module.exports = router;

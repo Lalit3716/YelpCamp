@@ -16,6 +16,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
+const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
+
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -86,6 +88,11 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
     if (!err.statusCode) {
         err.statusCode = 500;
+    }
+
+    if (err.message.includes("Cast to ObjectId failed")) {
+        req.flash("error", "Invalid Campground Search ID!");
+        res.redirect("/campgrounds/");
     }
 
     if (err.message === "Unexpected field") {
