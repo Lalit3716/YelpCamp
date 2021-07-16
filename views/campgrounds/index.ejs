@@ -48,8 +48,8 @@
 <div class="container d-flex flex-wrap campgrounds mt-5">
     <% for (let campground of campgrounds){%>
     <div class="card mb-3 shadow">
-        <img src="<%= campground.images.length>0?campground.images[0].thumb: "https://st3.depositphotos.com/25155840/37294/v/600/depositphotos_372944400-stock-illustration-text-image-available-circle-icon.jpg" %>"
-            class="card-img-top" alt="...">
+        <img src="<%= campground.images.length>0?campground.images[0].thumb: "/no-image.png" %>" class="card-img-top"
+            alt="...">
         <div class="card-body">
             <h5 class="card-title d-inline-block"><%= campground.title %></h5>
             <h5 class="card-title showprice d-inline"><i

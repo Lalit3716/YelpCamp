@@ -1,5 +1,5 @@
 <% if (success && success.length) { %>
-<div class="row">
+<div class="row flash">
     <div class="col-6 offset-3">
         <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
             <strong><%= success %></strong>
@@ -11,7 +11,7 @@
 
 
 <% if (error && error.length) { %>
-<div class="row">
+<div class="row flash">
     <div class="col-6 offset-3">
         <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
             <strong><%= error %></strong>

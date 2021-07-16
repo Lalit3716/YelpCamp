@@ -34,26 +34,26 @@ body {
 
 .slideshow li:nth-child(1) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url(http://i.imgur.com/K3mPv14.jpg);
+        url("/homepage-images/img-1.png");
 }
 .slideshow li:nth-child(2) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url(http://i.imgur.com/SBEmFpv.jpg);
+        url("/homepage-images/img-2.png");
     animation-delay: 10s;
 }
 .slideshow li:nth-child(3) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url(http://i.imgur.com/emvhOnb.jpg);
+        url("/homepage-images/img-3.png");
     animation-delay: 20s;
 }
 .slideshow li:nth-child(4) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url(http://i.imgur.com/2LSMCmJ.jpg);
+        url("/homepage-images/img-4.png");
     animation-delay: 30s;
 }
 .slideshow li:nth-child(5) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url(http://i.imgur.com/TVGe0Ef.jpg);
+        url("/homepage-images/img-5.png");
     animation-delay: 40s;
 }
 

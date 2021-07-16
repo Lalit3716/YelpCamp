@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const mongoose = require("mongoose");
+const MongoDbStore = require("connect-mongo");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const expressError = require("./utils/expressError");
@@ -15,6 +16,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const helmet = require("helmet");
 
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
@@ -38,8 +40,9 @@ app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
 
 // Setting Up Session
+const secret = process.env.SECRET || "thisisasecret";
 const sessionConfig = {
-    secret: "thisisasecret",
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -47,6 +50,10 @@ const sessionConfig = {
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
     },
+    store: MongoDbStore.create({
+        mongoUrl: "mongodb://localhost:27017/yelp-camp",
+        touchAfter: 24 * 3600,
+    }),
 };
 app.use(session(sessionConfig));
 
@@ -65,6 +72,62 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     next();
 });
+
+// Setting Helmet
+app.use(helmet());
+
+const scriptSrcUrls = [
+    "https://kit.fontawesome.com/",
+    "https://fontawesome.com/kits",
+    "https://use.fontawesome.com/",
+    "https://fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://use.fontawesome.com/",
+    "https://fontawesome.com",
+    "https://cdn.jsdelivr.net",
+    "https://api.mapbox.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://cdnjs.cloudflare.com/",
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+
+const fontSrcUrls = [
+    "https://cdnjs.cloudflare.com/",
+    "https://use.fontawesome.com/",
+];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                `https://res.cloudinary.com/${process.env.CLOUD_NAME}/`,
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 // Other Configs For Our App
 app.use(methodOverride("_method"));

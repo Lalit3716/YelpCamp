@@ -10,11 +10,11 @@ router = express.Router();
 
 router.get("/", catchAsync(campgrounds.renderIndexPage));
 
-router.get("/getAll", campgrounds.geoJsonCampgrounds);
+router.get("/getAll", catchAsync(campgrounds.geoJsonCampgrounds));
 
-router.get("/getOne/:id", campgrounds.geoJsonCampground);
+router.get("/getOne/:id", catchAsync(campgrounds.geoJsonCampground));
 
-router.get("/find/:title", campgrounds.checkCampgroundTitle);
+router.get("/find/:title", catchAsync(campgrounds.checkCampgroundTitle));
 
 router
     .route("/new")
