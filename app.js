@@ -17,6 +17,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
@@ -42,7 +43,9 @@ app.engine("ejs", ejsMate);
 // Setting Up Session
 const secret = process.env.SECRET || "thisisasecret";
 const sessionConfig = {
+    name: "asdbhbcaskjdfuygshvbdashbysgx",
     secret: secret,
+    // secure: true,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -134,6 +137,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(mongoSanitize());
 
 // Route Handlers
 app.get("/", (req, res) => {
@@ -170,6 +174,7 @@ app.use((err, req, res, next) => {
     res.status(err.statusCode).render("error", { err });
 });
 
+// const port = process.env.PORT || 3000;
 // Starting Up Server
 app.listen(3000, (req, res) => {
     console.log("LISTENING ON PORT 3000!!!");
