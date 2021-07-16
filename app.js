@@ -21,7 +21,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
-mongoose.connect("mongodb://localhost:27017/yelp-camp", {
+mongoose.connect(db_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -54,7 +54,7 @@ const sessionConfig = {
         maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
     },
     store: MongoDbStore.create({
-        mongoUrl: "mongodb://localhost:27017/yelp-camp",
+        mongoUrl: db_url,
         touchAfter: 24 * 3600,
     }),
 };
@@ -174,8 +174,8 @@ app.use((err, req, res, next) => {
     res.status(err.statusCode).render("error", { err });
 });
 
-// const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 // Starting Up Server
-app.listen(3000, (req, res) => {
-    console.log("LISTENING ON PORT 3000!!!");
+app.listen(port, (req, res) => {
+    console.log(`LISTENING ON PORT ${port}!`);
 });
