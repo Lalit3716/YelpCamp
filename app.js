@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
+  require("dotenv").config();
 }
 
 const express = require("express");
@@ -22,16 +22,16 @@ const mongoSanitize = require("express-mongo-sanitize");
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
 mongoose.connect(db_url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
 });
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "Connection Error:"));
 db.once("open", () => {
-    console.log("DATABASE CONNECTED!!");
+  console.log("DATABASE CONNECTED!!");
 });
 
 app = express();
@@ -43,20 +43,20 @@ app.engine("ejs", ejsMate);
 // Setting Up Session
 const secret = process.env.SECRET || "thisisasecret";
 const sessionConfig = {
-    name: "asdbhbcaskjdfuygshvbdashbysgx",
-    secret: secret,
-    // secure: true,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    },
-    store: MongoDbStore.create({
-        mongoUrl: db_url,
-        touchAfter: 24 * 3600,
-    }),
+  name: "asdbhbcaskjdfuygshvbdashbysgx",
+  secret: secret,
+  secure: true,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
+  },
+  store: MongoDbStore.create({
+    mongoUrl: db_url,
+    touchAfter: 24 * 3600,
+  }),
 };
 app.use(session(sessionConfig));
 
@@ -70,66 +70,66 @@ passport.deserializeUser(User.deserializeUser());
 // Setting Up flash
 app.use(flash());
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
+  res.locals.currentUser = req.user;
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
 });
 
 // Setting Helmet
 app.use(helmet());
 
 const scriptSrcUrls = [
-    "https://kit.fontawesome.com/",
-    "https://fontawesome.com/kits",
-    "https://use.fontawesome.com/",
-    "https://fontawesome.com/",
-    "https://stackpath.bootstrapcdn.com/",
-    "https://api.tiles.mapbox.com/",
-    "https://api.mapbox.com/",
-    "https://cdnjs.cloudflare.com/",
-    "https://cdn.jsdelivr.net",
+  "https://kit.fontawesome.com/",
+  "https://fontawesome.com/kits",
+  "https://use.fontawesome.com/",
+  "https://fontawesome.com/",
+  "https://stackpath.bootstrapcdn.com/",
+  "https://api.tiles.mapbox.com/",
+  "https://api.mapbox.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://cdn.jsdelivr.net",
 ];
 const styleSrcUrls = [
-    "https://kit-free.fontawesome.com/",
-    "https://use.fontawesome.com/",
-    "https://fontawesome.com",
-    "https://cdn.jsdelivr.net",
-    "https://api.mapbox.com/",
-    "https://api.tiles.mapbox.com/",
-    "https://fonts.googleapis.com/",
-    "https://cdnjs.cloudflare.com/",
+  "https://kit-free.fontawesome.com/",
+  "https://use.fontawesome.com/",
+  "https://fontawesome.com",
+  "https://cdn.jsdelivr.net",
+  "https://api.mapbox.com/",
+  "https://api.tiles.mapbox.com/",
+  "https://fonts.googleapis.com/",
+  "https://cdnjs.cloudflare.com/",
 ];
 const connectSrcUrls = [
-    "https://api.mapbox.com/",
-    "https://a.tiles.mapbox.com/",
-    "https://b.tiles.mapbox.com/",
-    "https://events.mapbox.com/",
+  "https://api.mapbox.com/",
+  "https://a.tiles.mapbox.com/",
+  "https://b.tiles.mapbox.com/",
+  "https://events.mapbox.com/",
 ];
 
 const fontSrcUrls = [
-    "https://cdnjs.cloudflare.com/",
-    "https://use.fontawesome.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://use.fontawesome.com/",
 ];
 app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: [],
-            connectSrc: ["'self'", ...connectSrcUrls],
-            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-            workerSrc: ["'self'", "blob:"],
-            objectSrc: [],
-            imgSrc: [
-                "'self'",
-                "blob:",
-                "data:",
-                `https://res.cloudinary.com/${process.env.CLOUD_NAME}/`,
-                "https://images.unsplash.com/",
-            ],
-            fontSrc: ["'self'", ...fontSrcUrls],
-        },
-    })
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        `https://res.cloudinary.com/${process.env.CLOUD_NAME}/`,
+        "https://images.unsplash.com/",
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
+  })
 );
 
 // Other Configs For Our App
@@ -141,7 +141,7 @@ app.use(mongoSanitize());
 
 // Route Handlers
 app.get("/", (req, res) => {
-    res.render("home");
+  res.render("home");
 });
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id", reviewRoutes);
@@ -149,33 +149,33 @@ app.use("/", userRoutes);
 
 // Error handlers
 app.all("*", (req, res, next) => {
-    next(new expressError("Page Not Found", 404));
+  next(new expressError("Page Not Found", 404));
 });
 
 app.use((err, req, res, next) => {
-    if (!err.statusCode) {
-        err.statusCode = 500;
-    }
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
 
-    if (err.message.includes("Cast to ObjectId failed")) {
-        req.flash("error", "Invalid Search ID!");
-        res.redirect("/campgrounds/");
-    }
+  if (err.message.includes("Cast to ObjectId failed")) {
+    req.flash("error", "Invalid Search ID!");
+    res.redirect("/campgrounds/");
+  }
 
-    if (err.message === "Unexpected field") {
-        req.flash("error", "Sorry Cannot Upload More Than 3 Images");
-        res.redirect("back");
-    }
+  if (err.message === "Unexpected field") {
+    req.flash("error", "Sorry Cannot Upload More Than 3 Images");
+    res.redirect("back");
+  }
 
-    if (err.message.includes("Invalid regular expression")) {
-        req.flash("error", "Invalid Search");
-        res.redirect("back");
-    }
-    res.status(err.statusCode).render("error", { err });
+  if (err.message.includes("Invalid regular expression")) {
+    req.flash("error", "Invalid Search");
+    res.redirect("back");
+  }
+  res.status(err.statusCode).render("error", { err });
 });
 
 const port = process.env.PORT || 3000;
 // Starting Up Server
 app.listen(port, (req, res) => {
-    console.log(`LISTENING ON PORT ${port}!`);
+  console.log(`LISTENING ON PORT ${port}!`);
 });
