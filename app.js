@@ -159,19 +159,19 @@ app.use((err, req, res, next) => {
 
   if (err.message.includes("Cast to ObjectId failed")) {
     req.flash("error", "Invalid Search ID!");
-    res.redirect("/campgrounds/");
+    return res.redirect("/campgrounds");
   }
 
   if (err.message === "Unexpected field") {
     req.flash("error", "Sorry Cannot Upload More Than 3 Images");
-    res.redirect("back");
+    return res.redirect(req.originalUrl);
   }
 
   if (err.message.includes("Invalid regular expression")) {
     req.flash("error", "Invalid Search");
-    res.redirect("back");
+    return res.redirect("/campgrounds");
   }
-  res.status(err.statusCode).render("error", { err });
+  return res.status(err.statusCode).render("error", { err });
 });
 
 const port = process.env.PORT || 3000;
