@@ -21,7 +21,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
-mongoose.connect("mongodb://localhost:27017/yelp-camp", {
+mongoose.connect(db_url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -45,7 +45,7 @@ const secret = process.env.SECRET || "thisisasecret";
 const sessionConfig = {
   name: "asdbhbcaskjdfuygshvbdashbysgx",
   secret: secret,
-  // secure: true,
+  secure: true,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -54,7 +54,7 @@ const sessionConfig = {
     maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
   },
   store: MongoDbStore.create({
-    mongoUrl: "mongodb://localhost:27017/yelp-camp",
+    mongoUrl: db_url,
     touchAfter: 24 * 3600,
   }),
 };
