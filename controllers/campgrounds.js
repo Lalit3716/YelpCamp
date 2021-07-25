@@ -84,6 +84,7 @@ module.exports.makeNewCampground = async (req, res) => {
   const images = req.files.map(f => {
     return { path: f.path, filename: f.filename };
   });
+
   const geoData = await geocoder
     .forwardGeocode({
       query: req.body.campground.location,
@@ -116,11 +117,26 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.editCampground = async (req, res) => {
   const deleteImages = req.body.deleteImages;
+
+  const geoData = await geocoder
+    .forwardGeocode({
+      query: req.body.campground.location,
+      limit: 1,
+    })
+    .send();
+
+  if (!geoData.body.features[0]) {
+    req.flash("error", "Invalid Location Please Check Your Location.");
+    res.redirect(`/campgrounds/${req.params.id}/edit`);
+  }
+
+  req.body.campground.geometry = geoData.body.features[0].geometry;
   const campground = await Campground.findByIdAndUpdate(
     req.params.id,
     req.body.campground,
     { runValidators: true }
   );
+
   if (deleteImages && deleteImages.length > 0) {
     await campground.updateOne({
       $pull: { images: { filename: { $in: deleteImages } } },
@@ -133,6 +149,7 @@ module.exports.editCampground = async (req, res) => {
   images = req.files.map(f => {
     return { path: f.path, filename: f.filename };
   });
+
   campground.images.push(...images);
   await campground.save();
   req.flash("success", "Campground Updated Successfully!");
