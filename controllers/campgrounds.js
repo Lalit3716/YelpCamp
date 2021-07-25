@@ -94,7 +94,7 @@ module.exports.makeNewCampground = async (req, res) => {
 
   if (!geoData.body.features[0]) {
     req.flash("error", "Invalid Location Please Check Your Location.");
-    res.redirect("/campgrounds/new");
+    return res.redirect("/campgrounds/new");
   }
 
   req.body.campground.geometry = geoData.body.features[0].geometry;
@@ -127,7 +127,7 @@ module.exports.editCampground = async (req, res) => {
 
   if (!geoData.body.features[0]) {
     req.flash("error", "Invalid Location Please Check Your Location.");
-    res.redirect(`/campgrounds/${req.params.id}/edit`);
+    return res.redirect(`/campgrounds/${req.params.id}/edit`);
   }
 
   req.body.campground.geometry = geoData.body.features[0].geometry;
