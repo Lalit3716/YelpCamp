@@ -51,7 +51,7 @@
                     <li class="list-group-item text-muted"><i class="fas fa-globe me-2"></i> <%= campground.location %>
                     </li>
                 </ul>
-                <% if (currentUser && (`${campground.author._id}` == `${currentUser._id}`)){ %>
+                <% if (currentUser && (`${campground.author._id}` == `${currentUser._id}` || currentUser.isAdmin)){ %>
                 <div class="card-body">
                     <a href="/campgrounds/<%= campground._id %>/edit" class="card-link btn btn-info">Edit
                         <%= campground.title %>
@@ -83,7 +83,7 @@
                         Rated: <%= review.rating %>
                     </p>
                     <p class="card-text mt-3"><%= review.body %></p>
-                    <% if (currentUser && (`${review.author._id}` == `${currentUser._id}`)){ %>
+                    <% if (currentUser && (`${review.author._id}` == `${currentUser._id}` || currentUser.isAdmin)){ %>
                     <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
                         method="POST" class="deletebtn">
                         <!-- <button type="button" class="btn"><i class="fas fa-pencil-alt"></i></button> -->
