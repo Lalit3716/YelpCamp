@@ -1,6 +1,6 @@
 const Campground = require("../models/campgrounds");
 const { cloudinary } = require("../cloudinary_config");
-
+const moment = require("moment");
 const mbxgeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocoder = mbxgeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 
@@ -99,6 +99,7 @@ module.exports.makeNewCampground = async (req, res) => {
 
   req.body.campground.geometry = geoData.body.features[0].geometry;
   const campground = new Campground(req.body.campground);
+  campground.dateCreated = moment().format("MMM Do YY");
   campground.author = req.user._id;
   campground.images = images;
   await campground.save();
@@ -150,6 +151,7 @@ module.exports.editCampground = async (req, res) => {
     return { path: f.path, filename: f.filename };
   });
 
+  campground.editDate = moment().format("MMM Do YY");
   campground.images.push(...images);
   await campground.save();
   req.flash("success", "Campground Updated Successfully!");

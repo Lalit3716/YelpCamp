@@ -50,8 +50,8 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
+    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 3,
   },
   store: MongoDbStore.create({
     mongoUrl: db_url,
@@ -111,6 +111,7 @@ const fontSrcUrls = [
   "https://cdnjs.cloudflare.com/",
   "https://use.fontawesome.com/",
 ];
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -136,6 +137,7 @@ app.use(
 app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
+app.locals.moment = require("moment");
 app.use(express.json());
 app.use(mongoSanitize());
 

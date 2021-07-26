@@ -45,10 +45,27 @@
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><i class="fas fa-user me-2"></i> <%= campground.author.username %></li>
-                    <li class="list-group-item"><i class="fas fa-dollar-sign me-2"></i> <%= campground.price %>/Night
+                    <li class="list-group-item"><i class="fas fa-user me-2 text-danger"></i>
+                        <%= campground.author.username %></li>
+                    <li class="list-group-item"><i class="fas fa-dollar-sign me-2 text-success"></i>
+                        <%= campground.price %>/Night
                     </li>
-                    <li class="list-group-item text-muted"><i class="fas fa-globe me-2"></i> <%= campground.location %>
+                    <li class="list-group-item"><i class="fas fa-globe me-2 text-primary"></i>
+                        <%= campground.location %>
+                    </li>
+                    <li class="list-group-item text-muted">
+                        <span class="me-1">
+                            <i class="fas fa-clock me-2"></i>
+                            <i>Created On
+                                <%= campground.dateCreated %>
+                            </i>
+                        </span>
+                        <% if(campground.editDate){ %>
+                        <br><i class="fas fa-history me-2"></i>
+                        <i>Last Modified On
+                            <%= campground.editDate %>
+                        </i>
+                        <% } %>
                     </li>
                 </ul>
                 <% if (currentUser && (`${campground.author._id}` == `${currentUser._id}` || currentUser.isAdmin)){ %>
@@ -78,7 +95,14 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Rating: <%= review.rating %></h5>
-                    <span class="card-subtitle"><i> -<%= review.author.username %></i></span>
+                    <span class="card-subtitle">
+                        <i class="fas fa-user me-1 text-danger"></i>
+                        <i><%= review.author.username %></i>
+                    </span>
+                    <div class="card-subtitle mt-2">
+                        <i class="fas fa-history text-success"></i>
+                        <i><%= moment(review.createDate).fromNow() %></i>
+                    </div>
                     <p class="starability-result mt-3" data-rating="<%= review.rating %>">
                         Rated: <%= review.rating %>
                     </p>
@@ -86,7 +110,6 @@
                     <% if (currentUser && (`${review.author._id}` == `${currentUser._id}` || currentUser.isAdmin)){ %>
                     <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
                         method="POST" class="deletebtn">
-                        <!-- <button type="button" class="btn"><i class="fas fa-pencil-alt"></i></button> -->
                         <button class="btn"><i class="far fa-trash-alt"></i></button>
                     </form>
                     <% } %>
@@ -117,7 +140,7 @@
                         <h3>Review</h3>
                     </label>
                     <textarea name="review[body]" id="review" cols="30" rows="3" class="form-control"
-                        required></textarea>
+                        placeholder="Write Your Review Here!" required></textarea>
                     <div class="invalid-feedback">
                         Review Must Not Be Empty!
                     </div>
@@ -136,3 +159,4 @@
     const id = `<%- campground._id %>`
 </script>
 <script src="/campgrounds/javascripts/mapbox.js"></script>
+<script src="/campgrounds/javascripts/validateForm.js"></script>
