@@ -1,20 +1,40 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
-const passport = require('passport');
-const authContoller = require('../controllers/auth');
+const passport = require("passport");
+const authController = require("../controllers/auth");
 
-router.route("/register")
-    .get(authContoller.renderRegisterForm)
-    .post(catchAsync(authContoller.registerUser))
+router
+  .route("/register")
+  .get(authController.renderRegisterForm)
+  .post(catchAsync(authController.registerUser));
 
-router.route("/login")
-    .get(authContoller.renderLoginForm)
-    .post(
-        passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), 
-        authContoller.loginUser
-        )
+router
+  .route("/login")
+  .get(authController.renderLoginForm)
+  .post(
+    passport.authenticate("local", {
+      failureFlash: true,
+      failureRedirect: "/login",
+    }),
+    authController.loginUser
+  );
 
-router.get('/logout', authContoller.logoutUser);
+router.get("/logout", authController.logoutUser);
+
+router
+  .route("/forget")
+  .get(authController.forget)
+  .post(authController.forgetPost);
+
+router
+  .route("/otpForm")
+  .get(authController.renderOtpForm)
+  .post(authController.otpFormPost);
+
+router
+  .route("/newPass/:id")
+  .get(authController.renderChangePassForm)
+  .post(authController.newPassPost);
 
 module.exports = router;

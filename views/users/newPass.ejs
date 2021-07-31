@@ -5,28 +5,28 @@
         <div class="col-sm-7 col-md-6 col-lg-5 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="text-center">Login</h1>
-                    <form action="/login" method="POST" class="needs-validation" novalidate>
+                    <h1 class="text-center">Reset Your Password</h1>
+                    <form action="/newPass/<%= userId %>" method="POST" class="needs-validation" novalidate>
                         <div class="form-group mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name='username' required autofocus
-                                placeholder="Username">
+                            <label for="new-pass" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="new-pass" name='new-pass' required autofocus
+                                placeholder="New Password">
                             <div class="valid-feedback">
                                 Looks Good!
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="Password" class="form-label">Password</label>
-                            <input type="Password" class="form-control" id="Password" name='password' required
-                                placeholder="Password">
+                            <label for="confirm-pass" class="form-label">confirm-pass</label>
+                            <input type="password" class="form-control" id="confirm-pass" name='confirm-pass' required
+                                placeholder="confirm-pass">
                             <div class="valid-feedback">
                                 Looks Good!
                             </div>
                         </div>
-                        <button class="btn btn-danger w-100">Log In</button>
+                        <button class="btn btn-success w-100">Change Password</button>
                     </form>
                     <div class="mt-2 text-center">
-                        <a href="/forget">Forgot Password?</a>
+                        <a href="/campgrounds">Canel</a>
                     </div>
                     <div class="mt-2 text-center">
                         Don't have an account?

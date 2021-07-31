@@ -1,0 +1,32 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-7 col-md-6 col-lg-5 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center">Reset Password</h2>
+                    <form action="/otpForm" method="POST" class="needs-validation" novalidate>
+                        <div class="form-group mb-3">
+                            <label for="otp" class="form-label">Enter Yout OTP</label>
+                            <input type="number" class="form-control" id="otp" name='otp' required autofocus
+                                min="100000" max="999999" placeholder="Enter Yout OTP">
+                            <div class="valid-feedback">
+                                Looks Good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Invalid OTP!
+                            </div>
+                            <div class="mt-2">
+                                Don't have an OTP?
+                                <a href="/forget">Get OTP</a>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-100">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/campgrounds/javascripts/validateForm.js"></script>

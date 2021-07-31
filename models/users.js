@@ -12,6 +12,14 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  otp: {
+    type: Number,
+    min: 100000,
+    max: 999999,
+  },
+  validTill: {
+    type: Date,
+  },
 });
 
 userSchema.plugin(passportMongoose);
