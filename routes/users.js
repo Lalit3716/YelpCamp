@@ -16,6 +16,7 @@ router
     passport.authenticate("local", {
       failureFlash: true,
       failureRedirect: "/login",
+      successFlash: "Welcome Back!",
     }),
     authController.loginUser
   );
