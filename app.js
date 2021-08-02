@@ -36,6 +36,14 @@ db.once("open", () => {
 
 app = express();
 
+// Other Configs For Our App
+app.use(methodOverride("_method"));
+app.use(express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: true }));
+app.locals.moment = require("moment");
+app.use(express.json());
+app.use(mongoSanitize());
+
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
@@ -60,13 +68,6 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 
-// Setting Up Passport
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 // Setting Up flash
 app.use(flash());
 app.use((req, res, next) => {
@@ -75,6 +76,13 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+
+// Setting Up Passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Setting Helmet
 app.use(helmet());
@@ -132,14 +140,6 @@ app.use(
     },
   })
 );
-
-// Other Configs For Our App
-app.use(methodOverride("_method"));
-app.use(express.static(__dirname + "/public"));
-app.use(express.urlencoded({ extended: true }));
-app.locals.moment = require("moment");
-app.use(express.json());
-app.use(mongoSanitize());
 
 // Route Handlers
 app.get("/", (req, res) => {

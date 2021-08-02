@@ -1,4 +1,7 @@
 const nodemailer = require("nodemailer");
+const otpgenerator = () => {
+  return Math.floor(100000 + Math.random() * 900000);
+};
 
 const transport = nodemailer.createTransport({
   service: "Gmail",
@@ -8,10 +11,6 @@ const transport = nodemailer.createTransport({
     pass: process.env.GMAIL_PASS,
   },
 });
-
-const otpgenerator = () => {
-  return Math.floor(100000 + Math.random() * 900000);
-};
 
 const sendMail = async (email, otp) => {
   const mailOptions = {
