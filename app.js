@@ -19,7 +19,7 @@ const LocalStrategy = require("passport-local");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 
-const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
+const db_url = "mongodb://localhost:27017/yelp-camp" || process.env.DB_URL;
 
 mongoose.connect(db_url, {
   useNewUrlParser: true,
@@ -68,6 +68,13 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 
+// Setting Up Passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Setting Up flash
 app.use(flash());
 app.use((req, res, next) => {
@@ -76,13 +83,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
-
-// Setting Up Passport
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 // Setting Helmet
 app.use(helmet());
