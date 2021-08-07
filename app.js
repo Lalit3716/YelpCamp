@@ -19,7 +19,7 @@ const LocalStrategy = require("passport-local");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 
-const db_url = "mongodb://localhost:27017/yelp-camp" || process.env.DB_URL;
+const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
 mongoose.connect(db_url, {
   useNewUrlParser: true,
