@@ -64,7 +64,7 @@
                     </p>
                 </div>
                 <div class="mb-3 deleteImages">
-                    <label class="form-label d-block">Delete Images</label>
+                    <div class="form-label d-block">Delete Images</div>
                     <% campground.images.forEach((img, i) => { %>
                     <input type="checkbox" name="deleteImages[]" id="image<%= i %>" value="<%= img.filename %>">
                     <label for="image<%= i %>"><img src="<%= img.deletethumb %>" alt=""></label>
