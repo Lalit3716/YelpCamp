@@ -1,5 +1,7 @@
 async function makeClusterMap() {
   const campgrounds = await axios.get("/campgrounds/getAll");
+
+  mapboxgl.name = "yelpcamp";
   mapboxgl.accessToken = Mapbox_Token;
   const map = new mapboxgl.Map({
     container: "map",
@@ -108,6 +110,14 @@ async function makeClusterMap() {
       }
 
       new mapboxgl.Popup().setLngLat(coordinates).setHTML(html).addTo(map);
+    });
+
+    map.on("mouseenter", "unclustered-point", function (e) {
+      map.getCanvas().style.cursor = "pointer";
+    });
+
+    map.on("mouseleave", "unclustered-point", function () {
+      map.getCanvas().style.cursor = "";
     });
 
     map.on("mouseenter", "clusters", function () {

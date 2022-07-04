@@ -4,7 +4,7 @@ const cities = require("./cities");
 const { descriptors, places } = require("./seedHelpers");
 const moment = require("moment");
 
-const sample = arr => arr[Math.floor(Math.random() * arr.length)];
+const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   useNewUrlParser: true,
