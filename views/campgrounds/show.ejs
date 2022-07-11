@@ -67,7 +67,7 @@
                         <% } %>
                     </li>
                 </ul>
-                <% if (currentUser && (`${campground.author._id}` == `${currentUser._id}` || currentUser.isAdmin)){ %>
+                <% if (currentUser && (`${campground.author?._id}` == `${currentUser?._id}` || currentUser?.isAdmin)){ %>
                 <div class="card-body">
                     <a href="/campgrounds/<%= campground._id %>/edit" class="card-link btn btn-info">Edit
                         <%= campground.title %>
