@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
@@ -6,8 +6,6 @@ COPY package* ./
 
 RUN npm install
 RUN npm install -g nodemon
-
-COPY . .
 
 EXPOSE 3000
 
